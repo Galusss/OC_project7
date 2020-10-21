@@ -23,6 +23,9 @@ const User = db.sequelize.define(
         date_inscription: {
             type: Sequelize.DATE,
             defaultValue: Sequelize.NOW
+        },
+        permission: {
+            type: Sequelize.SMALLINT
         }
     }, 
     {
