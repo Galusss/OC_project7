@@ -1,77 +1,43 @@
 <template>
     <div class="account">
-        <div class="cardAccount">
-            <h1>Informations du compte</h1>
-            <div>
-                <span>Email :</span> <input id="email">
+        <div class="ui form">
+            <div class="centerDisplay">
+                <img src="../assets/logo.png" width="190" height="190">
+            </div>    
+            <div class="required field">
+                <label>Email</label>
+                <input id="email" type="text" >
             </div>
-            <div>
-                <span>Prenom :</span> <input id="prenom">
+            <div class="required field">
+                <label>Prenom</label>
+                <input id="prenom" type="text">
             </div>
-            <div>
-                <span>Nom :</span> <input id="nom">
+            <div class="required field">
+                <label>Nom</label>
+                <input id="nom" type="text">
             </div>
-            <div class="btnAccount">
-                <button class="btnEdit" @click="edit">Modifier les informations de compte</button>
-                <button class="btnDelete" @click="destroy">Supprimer le compte</button>
+            <div class="centerDisplay">
+                <button class="ui positive basic button" @click="edit()">Modifier les informations</button>
+                <button class="ui negative basic button" @click="destroy()">Supprimer le compte</button>
             </div>
         </div>
     </div>
 </template>
 
+
 <style>
-.cardAccount{
-    font-size: 20px;
-    color: #2c3e50;
-    background-color: #f0f0f0;
-    border: solid 1px black;
-    border-radius: 30px;
-    width: 1000px;
-    height: 600px;
-    margin: 0 auto;
-    margin-top: 60px;
-    text-align: center;
+.ui.form{
+  width: 50%;
+  margin: auto;
+  margin-top: 30px;
 }
 
-.cardAccount h1{
-    margin: 50px;
-}
-
-.cardAccount div, span{
-    display: flex;
-    margin: auto;    
-    font-size: 26px;
-    text-decoration: underline;
-    font-weight: bold;
-    color: #2c3e50;
-}
-.cardAccount div{
-    margin-top: 40px;
-    margin-right: 85px;
-    text-decoration: none;
-}
-
-.cardAccount input{
-    height: 20px;
-    width: 450px;
-    padding: 10px;
-    border: solid black 1px;
-    border-radius: 19px;
-    font-size: 20px;
-    font-weight: bold;
-    color: #2c3e50;
-}
-
-.btnEdit{
-    background-color: #42b983;
-    margin-left: 80px;
-    margin-right: 30px;
-}
-
-.btnDelete{
-    background-color: #FF0000;
+.centerDisplay{
+display: flex;
+justify-content: center;
 }
 </style>
+
 
 <script>
 let id = sessionStorage.getItem("userId");
@@ -113,7 +79,6 @@ export default {
             })
         },
         destroy: function () {
-
             this.$http.delete("http://localhost:5000/users/account/" + id, {
                 headers: {
                     Authorization: 'bearer ' + token

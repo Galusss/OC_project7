@@ -1,80 +1,64 @@
 <template>
-    <div id="app">
-        <div id="article">
-            <div class="card">
+    <div class="oneArticle">
+        <div class="headerOneArticle">
+            <img src="../assets/logo.png" width="250" height="250">
+        </div>
+        <div class="ui card">
+            <div class="content">
                 <div class="header">
                     {{ name }}
                 </div>
-                <div class="content">
-                    {{ description }}
+                <div class="meta">
+                    <span>Source(s) :</span> {{ source }}
                 </div>
-                <div class="source">
-                    <span>Source(s):</span> {{ source }}
-                </div>
-          
-                    <div class="divBtn">
-                        <button @click="destroy" class="deleteBtn">Supprimer</button>
-                    </div>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+            </div>
+            <div class="deleteArticleBtn">
+                <button class="ui negative basic button" @click="destroy()">Supprimer l'article</button>
             </div>
         </div>
-        <div class="btn">
-            <router-link to="/articles">
-                <button>Voir tout les articles</button>
-            </router-link>
-            <router-link to="/article/new">
-                <button>Créer un article</button>
-            </router-link>
+
+
+        <div class="btnOneArticle">
+            <button class="ui primary basic button" @click="goToArticle()">Voir tout les articles</button>
+            <button class="ui primary basic button" @click="goToNewArticle()">Créer un article</button>
         </div>
     </div>
 </template>
 
+
 <style>
-.card{
-    font-size: 20px;
-    color: #2c3e50;
-    background-color: #f0f0f0;
-    border: solid 1px black;
-    border-radius: 30px;
+.headerOneArticle{
+    text-align: center;
+}
+
+.ui.card {
+    padding: 30px;
+    margin: auto;
     width: 700px;
-    height: 500px;
-    margin: 0 auto;
-    margin-top: 60px;
+    height: 600px;
 }
-.card div{
-    padding: 25px;
-    word-wrap: break-word;
+
+.meta, p{
+    padding-top: 50px;
 }
-.header{
-    font-size: 36px;
-    font-weight: bold;
+
+.deleteArticleBtn, .btnOneArticle{
+    text-align: center;
 }
-.source span{
-    text-decoration: underline;
-}
-.divBtn{
-    display: flex;
-    justify-content: center;
-}
-.deleteBtn{
-    height: 50px;
-    width: 250px;
-    background-color: rgb(247, 114, 114);
-}
-.btn{
-    display: flex;
-    justify-content: center;
-    margin: 80px;
-}
-button{
-    margin: 0px 10px;
+
+.btnOneArticle{
+    margin-top: 20px;
 }
 </style>
 
+
 <script>
 let data = JSON.parse(sessionStorage.getItem('article'));
-console.log(data.userId);
 let myId = sessionStorage.getItem('userId');
-console.log(myId);
+let myPermission = sessionStorage.getItem('userPermission');
+let dataToken = JSON.parse(sessionStorage.getItem('vue-session-key')); 
+let token = dataToken.jwt;
 export default {
     data () {
         return {
@@ -83,11 +67,14 @@ export default {
             source: data.source_article
         };
     },
-
     methods: {
         destroy: function () {
-            if (data.userId === myId) {
-                this.$http.delete("http://localhost:5000/articles/" + data.article_id)    
+            if (data.userId == myId || myPermission == 1) {
+                this.$http.delete("http://localhost:5000/articles/" + data.article_id, {
+                    headers: {
+                        Authorization: 'bearer ' + token
+                    }
+                })    
                 .then(response => {   
                     response.json().then((data) => {
                         console.log('success', data)
@@ -99,6 +86,12 @@ export default {
             } else{
                 alert('Vous ne pouvez pas supprimer un article que vous n\'avez pas créer')
             }
+        },
+        goToArticle() {
+            window.open("http://localhost:8080/articles/", "_parent");      
+        },
+        goToNewArticle() {
+            window.open("http://localhost:8080/article/new", "_parent");
         }
     }
 }

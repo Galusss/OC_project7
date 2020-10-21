@@ -15,6 +15,7 @@ exports.signup = function (req, res) {
         nom: req.body.nom,
         email: req.body.email,
         password: req.body.password,
+        permission: 0,
         date_inscription: today
     }
     User.findOne({
@@ -59,13 +60,14 @@ exports.login = function (req, res) {
         if (user) {
             if (bcrypt.compareSync(req.body.password, user.password)) {
                 let token = jwt.sign(user.dataValues, process.env.TOKEN_KEY, {
-                    expiresIn: 1440 // 24 hours
+                    expiresIn: '24h'
                 })
-                res.json({
+                res.send({
                     status: 'Connection successfully',
-                    token: token
+                    token: token,
+                    userId: user.id,
+                    userPermission: user.permission
                 })
-
             }else {
                 res.status(400).json({
                     error: 'User does not exist'
@@ -77,6 +79,26 @@ exports.login = function (req, res) {
         res.status(400).json({
             error: err
         })
+    })
+};
+
+
+// get one user with id
+exports.getOneUser = function (req, res) {
+    User.findOne({
+        where: {
+            id: req.params.id
+        }
+    })
+    .then(user => {
+        if(!user) {
+            res.json({
+                status: 'User not found'
+            })
+            res.send(err)
+        }else {
+            res.json(user)
+        }
     })
 };
 

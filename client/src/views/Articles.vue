@@ -1,48 +1,55 @@
 <template>
-    <div id="app">
-            <div id="article">
-                <div id="card" v-for="article in articles" :key="article" @click="getOne(article)">
-                    <div class="content">
+    <div class="article">
+        <div class="headerArticle">
+            <img src="../assets/logo.png" width="250" height="250">
+            <h1>Voici tous les articles présents sur Groupomania !</h1>
+        </div>
+        <div class="ui cards">
+            <div class="card" v-for="article in articles" :key="article" @click="getOne(article)">
+                <div class="content">
+                    <div class="header">
                         {{ article.articleName }}
                     </div>
                 </div>
             </div>
-        <div class="btn">
-            <router-link to="/article/new">
-                <button>Créer un article</button>
-            </router-link>
         </div>
-    </div>
+        <div class="btnArticle">
+            <button class="ui primary basic button" @click="goToNewArticle()">Créer un article</button>
+        </div>
+    </div> 
 </template>
 
+
 <style>
-#card{
-    font-size: 22px;
-    font-weight: bold;
-    color: #2c3e50;
-    background-color: #f0f0f0;
-    border: solid 1px black;
-    border-radius: 30px;
+.headerArticle{
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.card{
     width: 350px;
     height: 150px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+}
+
+.header{
+    text-align: center; 
+}
+
+.ui.card .content, .ui.cards .card .content {
+    margin: 53px;
+}
+
+.ui.cards .card{
     margin: 40px;
+    justify-content: center;
 }
 
-#article{
-    display: flex;
-}
-
-.btn{
-  margin: auto;
-  margin-top: 90px;
-  font-size: 18px;
-  font-weight: bold;
-  color: #2c3e50;
+.btnArticle{
+    margin-top: 30px;
+    text-align: center;
 }
 </style>
+
 
 <script>
 let data = JSON.parse(sessionStorage.getItem('vue-session-key')); 
@@ -51,7 +58,6 @@ export default {
     data () {
         return {
             articles: []    
-            
         };
     },
     mounted () {
@@ -87,6 +93,9 @@ export default {
                 console.log('erreur', response)
             });  
         },
+        goToNewArticle() {
+            window.open("http://localhost:8080/article/new", "_parent");
+        }
     }
 }
 </script>

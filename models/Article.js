@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize")
 const db = require("../config/db")
 
-const Articles = db.sequelize.define(
+const Article = db.sequelize.define(
     'articles', {
         article_id: {
             type: Sequelize.SMALLINT,
@@ -9,19 +9,17 @@ const Articles = db.sequelize.define(
             autoIncrement: true
         },
         userId: {
-            type: Sequelize.SMALLINT
+            type: Sequelize.SMALLINT,
         },
-        article_name: {
-            type: Sequelize.TEXT
+        articleName: {
+            type: Sequelize.STRING
         },
         article_description: {
             type: Sequelize.TEXT
         },
-        url_article: {
-            type: Sequelize.TEXT
-        },
         source_article: {
-            type: Sequelize.TEXT
+            type: Sequelize.STRING,
+          
         },
         date_publication: {
             type: Sequelize.DATE,
@@ -34,4 +32,4 @@ const Articles = db.sequelize.define(
 )
 
 
-module.exports = Articles;
+module.exports = Article;

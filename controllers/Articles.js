@@ -10,7 +10,7 @@ exports.getAllArticle = function (req, res) {
             res.json({
                 status: 'No article found'
             })
-            res.send(err)
+            
         }else {
             res.json(article)
         }
@@ -42,27 +42,28 @@ exports.getOneArticle = function (req, res) {
 exports.create = function (req, res) {
     const today = new Date()
     const articleData = {
-        userId: req.body.userId,
-        article_name: req.body.article_name,
+        articleName: req.body.articleName,
         article_description: req.body.article_description,
-        url_article: req.body.url_article,
         source_article: req.body.source_article,
-        date_publication: today
+        userId: req.body.userId,
+        date_inscription: today
     }
     Article.findOne({
         where: {
-            article_name: req.body.article_name
+            articleName: req.body.articleName
         }
     })
     .then(article => {
         if (!article) {
             Article.create(articleData)
             .then(article => {
-                res.json(article)
+                res.json({
+                    status: article.articleName + ' registered'
+                })
             })
             .catch(err => {
                 res.send('error: ' + err)
-            })    
+            }) 
         }else {
             res.json({
                 error: 'Article name already exists'
@@ -91,7 +92,7 @@ exports.update = function (req, res) {
         }else {
             article.url_article = req.body.url_article,
             article.source_article = req.body.source_article,
-            article.article_name = req.body.article_name,
+            article.articleName = req.body.articleName,
             article.article_description = req.body.article_description,
             await article.save();
             res.json(article)
@@ -104,7 +105,7 @@ exports.update = function (req, res) {
 exports.delete = function (req, res) {
     Article.findOne({
         where: {
-            userId: req.params.id
+            article_id: req.params.id
         }
     })
     .then(async article => {

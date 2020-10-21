@@ -15,6 +15,9 @@ users.post("/signup", usersController.signup);
 // login
 users.post("/login", usersController.login);
 
+// get a user with id 
+users.get('/:id', usersController.getOneUser);
+
 // update a user with id
 users.put('/account/:id', auth, usersController.update);
 
