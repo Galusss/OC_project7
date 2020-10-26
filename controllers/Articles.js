@@ -1,5 +1,5 @@
 const Article = require('../models/Article')
-
+const User = require('../models/User')
 
 
 // get all article
@@ -46,6 +46,8 @@ exports.create = function (req, res) {
         article_description: req.body.article_description,
         source_article: req.body.source_article,
         userId: req.body.userId,
+        lastnameAuthor: req.body.lastnameAuthor,
+        firstnameAuthor: req.body.firstnameAuthor,
         date_inscription: today
     }
     Article.findOne({

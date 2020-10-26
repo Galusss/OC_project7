@@ -66,7 +66,9 @@ exports.login = function (req, res) {
                     status: 'Connection successfully',
                     token: token,
                     userId: user.id,
-                    userPermission: user.permission
+                    userPermission: user.permission,
+                    userFirstname: user.prenom,
+                    userLastname: user.nom
                 })
             }else {
                 res.status(400).json({

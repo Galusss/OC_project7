@@ -2,22 +2,79 @@
   <div>
     <div class="ui inverted segment">
       <div class="ui inverted secondary pointing menu">
+        <img src="../assets/icon-left-font-monochrome-white.png" class="imgNav" width="150" height="150" @click="goToHome()">
         <a class="item" @click="goToHome()">
-          Accueil
+          <span>Accueil</span>
         </a>
-        <a class="item" v-show="this.$session.exists()" @click="goToArticles">
-          Articles
+        <a class="item" v-show="this.$session.exists()" @click="goToArticles()">
+          <span>Articles</span>
         </a>
-        <a class="item" v-show="this.$session.exists()" @click="goToAccount">
-          Mon compte
+        <a class="item" v-show="this.$session.exists()" @click="goToAccount()">
+          <span>Mon compte</span>
         </a>
-        <a class="item"  @click="logout()" v-show="this.$session.exists()">
-          Déconnexion
+        <a class="item logout"  @click="logout()" v-show="this.$session.exists()">
+          <span>Déconnexion</span>
         </a>
       </div>
     </div>
   </div>
 </template>
+
+
+<style scoped>
+div.ui.inverted.segment{
+  padding: 0 20px;
+}
+
+.ui.segment{
+  border-radius: 0px;
+}
+
+.ui.secondary.pointing.menu .item {
+  padding: 0px 25px;
+  padding-bottom: 3px;
+  font-size: 24px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+img{
+  margin-right: 30px;
+}
+
+a.item{
+  height: 150px;
+  width: auto;
+}
+
+.ui.secondary.inverted.menu .dropdown.item:hover, .ui.secondary.inverted.menu .link.item:hover, .ui.secondary.inverted.menu a.item:hover {
+  color: initial;
+}
+
+span:hover{
+  color: #ffffff;
+}
+
+@media screen and (max-width: 900px) {
+  .imgNav{
+    display: none;
+  }
+
+  a.item{
+    height: initial;
+  }
+
+  div.ui.inverted.segment{
+    padding: 0px;
+  }
+
+  .ui.secondary.pointing.menu .item {
+    padding: 10px;
+    margin: 0px;
+    font-size: 14px;
+  }
+}
+</style>
+
 
 <script>
 export default {
@@ -43,13 +100,3 @@ export default {
   }
 }
 </script>
-
-<style>
-.ui.segment{
-  border-radius: 0px;
-}
-
-a:active{
-  color: red;
-}
-</style>

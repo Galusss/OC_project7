@@ -2,39 +2,95 @@
     <div class="account">
         <div class="ui form">
             <div class="centerDisplay">
-                <img src="../assets/logo.png" width="190" height="190">
+                <img class="accountLogo" src="../assets/logo.png" width="200" height="200">
             </div>    
-            <div class="required field">
+            <div class="field">
                 <label>Email</label>
                 <input id="email" type="text" >
             </div>
-            <div class="required field">
+            <div class="field">
                 <label>Prenom</label>
                 <input id="prenom" type="text">
             </div>
-            <div class="required field">
+            <div class="field">
                 <label>Nom</label>
                 <input id="nom" type="text">
             </div>
-            <div class="centerDisplay">
-                <button class="ui positive basic button" @click="edit()">Modifier les informations</button>
-                <button class="ui negative basic button" @click="destroy()">Supprimer le compte</button>
+            <div class="centerDisplay btnAccount">
+                <button class="ui green button" @click="edit()">Modifier les informations</button>
+                <button class="ui red button" @click="destroy()">Supprimer le compte</button>
             </div>
         </div>
     </div>
 </template>
 
 
-<style>
+<style scoped>
+.accountLogo{
+    margin: 40px 0px;
+}
+
 .ui.form{
-  width: 50%;
-  margin: auto;
-  margin-top: 30px;
+    width: 50%;
+    margin: auto;
+    margin-top: 30px;
+}
+
+.ui.form input[type="text"] {
+    border: solid black 1px;
 }
 
 .centerDisplay{
-display: flex;
-justify-content: center;
+    display: flex;
+    justify-content: center;
+}
+
+.btnAccount{
+    margin: 40px 0px;
+}
+
+.ui.button{
+    margin: 30px;
+}
+
+.ui.red.button, .ui.green.button{
+    font-weight: bold;
+    font-size: 18px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    min-width: 300px;
+}
+
+.ui.red.button:hover, .ui.green.button:hover{
+    opacity: 0.6;
+}
+
+@media screen and (max-width: 1200px) {
+    .ui.red.button, .ui.green.button{
+        font-size: 12px;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    img{
+        width: 120px;
+        height: 120px;
+    }
+
+    .ui.red.button, .ui.green.button{
+        min-width: 210px;
+    }
+}
+
+@media screen and (max-width: 550px) {
+    img{
+        width: 80px;
+        height: 80px;
+    }
+
+    .ui.red.button, .ui.green.button{
+        font-size: 8px;
+        min-width: 130px;
+    }
 }
 </style>
 

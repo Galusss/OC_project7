@@ -24,6 +24,12 @@ const Article = db.sequelize.define(
         date_publication: {
             type: Sequelize.DATE,
             defaultValue: Sequelize.NOW
+        },
+        lastnameAuthor: {
+            type: Sequelize.STRING
+        },
+        firstnameAuthor: {
+            type: Sequelize.STRING
         }
     }, 
     {
