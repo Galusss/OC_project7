@@ -1,22 +1,24 @@
 <template>
   <div>
-    <div class="ui inverted segment">
-      <div class="ui inverted secondary pointing menu">
-        <img src="../assets/icon-left-font-monochrome-white.png" class="imgNav" width="150" height="150" @click="goToHome()">
-        <a class="item" @click="goToHome()">
-          <span>Accueil</span>
-        </a>
-        <a class="item" v-show="this.$session.exists()" @click="goToArticles()">
-          <span>Articles</span>
-        </a>
-        <a class="item" v-show="this.$session.exists()" @click="goToAccount()">
-          <span>Mon compte</span>
-        </a>
-        <a class="item logout"  @click="logout()" v-show="this.$session.exists()">
-          <span>Déconnexion</span>
-        </a>
+    <header>
+      <div class="ui inverted segment">
+        <div class="ui inverted secondary pointing menu">
+          <img src="../assets/icon-left-font-monochrome-white.png" alt="Réseau social de la société Groupomania" class="imgNav" width="150" height="150" @click="goToHome()">
+          <a class="item" @click="goToHome()">
+            <span>Accueil</span>
+          </a>
+          <a class="item" v-show="this.$session.exists()" @click="goToArticles()">
+            <span>Articles</span>
+          </a>
+          <a class="item" v-show="this.$session.exists()" @click="goToAccount()">
+            <span>Mon compte</span>
+          </a>
+          <a class="item logout"  @click="logout()" v-show="this.$session.exists()">
+            <span>Déconnexion</span>
+          </a>
+        </div>
       </div>
-    </div>
+    </header>
   </div>
 </template>
 
@@ -35,6 +37,10 @@ div.ui.inverted.segment{
   padding-bottom: 3px;
   font-size: 24px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.ui.secondary.inverted.pointing.menu, .ui.inverted.segment, .ui.primary.inverted.segment {
+  background-color: #162a4a;
 }
 
 img{
@@ -68,9 +74,16 @@ span:hover{
   }
 
   .ui.secondary.pointing.menu .item {
-    padding: 10px;
+    padding: 10px 10px;
     margin: 0px;
     font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .ui.secondary.pointing.menu .item {
+    font-size: 10px;
+    padding: 10px 5px;
   }
 }
 </style>

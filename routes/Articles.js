@@ -16,7 +16,7 @@ articles.get("/", auth, articlesController.getAllArticle);
 articles.get("/:id", auth, articlesController.getOneArticle);
 
 // create
-articles.post("/", /*auth,*/ articlesController.create);
+articles.post("/", auth, articlesController.create);
 
 // update article with id
 articles.put("/:id", auth, articlesController.update);

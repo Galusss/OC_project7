@@ -1,36 +1,38 @@
 <template>
     <div class="oneArticle">
         <div class="headerOneArticle">
-            <img src="../assets/logo.png" width="200" height="200">
+            <h1>
+                <img src="../assets/logo.png" alt="Logo de la société Groupomania" width="200" height="200">
+            </h1>   
         </div>
-        <div class="error"></div>
-        <div class="ui card">
-            <div class="content">
-                <div class="header">
-                    {{ name }}
+        <section>
+            <div class="error"></div>
+            <div class="ui card">
+                <div class="content">
+                    <div class="header">
+                        {{ name }}
+                    </div>
+                    <p> {{ description }} </p>
+                    <div class="meta">
+                        <span>Source(s) :</span> {{ source }}
+                    </div>
+                    <div class="meta">
+                        <span>Publié par</span> {{ firstnameAuthor + " " + lastnameAuthor }}
+                    </div>
+                    <div class="meta">
+                        <span>Date de publication :</span> {{  date }}
+                    </div>
                 </div>
-                <p> {{ description }} </p>
-
-                <div class="meta">
-                    <span>Source(s) :</span> {{ source }}
-                </div>
-                <div class="meta">
-                    <span>Publié par</span> {{ firstnameAuthor + " " + lastnameAuthor }}
-                </div>
-                <div class="meta">
-                    <span>Date de publication :</span> {{  date }}
+                <div>
+                    <button class="ui blue button editBtn" @click="goToUpdateArticle()">Modifier l'article</button>
+                    <button class="ui blue button deleteBtn" @click="destroy()">Supprimer l'article</button>
                 </div>
             </div>
-            <div class="deleteArticleBtn">
-                <button class="ui red button" @click="destroy()">Supprimer l'article</button>
+            <div class="btnOneArticle">
+                <button class="ui blue button" @click="goToArticle()">Voir tout les articles</button>
+                <button class="ui blue button" @click="goToNewArticle()">Créer un article</button>
             </div>
-        </div>
-
-
-        <div class="btnOneArticle">
-            <button class="ui blue button" @click="goToArticle()">Voir tout les articles</button>
-            <button class="ui blue button" @click="goToNewArticle()">Créer un article</button>
-        </div>
+        </section>
     </div>
 </template>
 
@@ -54,17 +56,17 @@
 }
 
 .ui.card > .content > .header:not(.ui), .ui.cards > .card > .content > .header:not(.ui) {
-    color: rgba(17, 16, 16, 0.795);
+    color: rgb(14, 14, 14);
     font-size: 30px;
 }
 
 p{
-    color: rgba(17, 16, 16, 0.795);
+    color: rgb(14, 14, 14);
     font-size: 16px;   
 }
 
 .ui.card .meta, .ui.cards > .card .meta {
-    color: rgba(54, 53, 53, 0.795);
+    color: rgba(14, 14, 14, 0.795);
     font-size: 14px;
 }
 
@@ -73,7 +75,7 @@ p{
     margin: auto;
     width: 700px;
     height: auto;
-    background-image: url('../assets/white-texture.jpg');
+    background-color: #bfbfb8;
     font-weight: bold;
 }
 
@@ -96,16 +98,18 @@ p{
 
 .ui.button{
     margin: 30px;
+    border: solid black 1px;
+    color: black;
 }
 
-.ui.blue.button, .ui.red.button{
+.ui.blue.button{
     font-weight: bold;
     font-size: 18px;
     font-family: Georgia, 'Times New Roman', Times, serif;
-    min-width: 300px;
+    min-width: 250px;
 }
 
-.ui.blue.button:hover, .ui.red.button:hover{
+.ui.blue.button:hover{
     opacity: 0.6;
 }
 
@@ -158,6 +162,17 @@ let myPermission = sessionStorage.getItem('userPermission');
 let dataToken = JSON.parse(sessionStorage.getItem('vue-session-key')); 
 let token = dataToken.jwt;
 export default {
+    mounted () {
+        if ((data.userId != myId) && (myPermission != 1)) {
+            document.querySelector(".deleteBtn").style.display = "none";
+        }
+        if (data.userId != myId) {
+            document.querySelector(".editBtn").style.display = "none";
+            document.querySelector(".deleteBtn").style.display = "block";
+            document.querySelector(".deleteBtn").style.marginLeft = "auto";
+            document.querySelector(".deleteBtn").style.marginRight = "auto";
+        }
+    },
     data () {
         return {
             name: data.articleName,
@@ -195,6 +210,9 @@ export default {
         },
         goToNewArticle() {
             window.open("http://localhost:8080/article/new", "_parent");
+        },
+        goToUpdateArticle() {
+            window.open("http://localhost:8080/article/update/" + data.article_id, "_parent");
         }
     }
 }

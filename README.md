@@ -30,3 +30,11 @@
  10. Les utilisateurs doivent pouvoir facilement repérer les dernières participations des employés.
  11. Le ou la chargé-e de communication Groupomania doit pouvoir modérer les interactions entre les salariés.
  12. Le ou la chargé-e de communication Groupomania doit pouvoir afficher les dernières participations des salariés.
+
+ #### __Installation :__ 
+1. Cloner le répository.
+2. Insérer le fichier ".env" qui contient les variables d'environnements dans le dossier racine de l'application.
+3. Faire un "npm install" directement depuis le dossier racine de l'application.
+4. Faire un nouveau "npm install" cette fois ci depuis le dossier "client" de l'application.
+5. Lancer le serveur de développement Vue.JS avec la commande "serve" depuis votre IDE ou "vue-cli-service serve" depuis un terminal de commande.
+6. Lancer le serveur backend avec la commande "dev" depuis votre IDE ou "nodemon server.js" depuis un terminal de commande.

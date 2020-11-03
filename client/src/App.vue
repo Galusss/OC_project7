@@ -14,7 +14,7 @@
 <style>
 html, body {
   margin: 0;
-  background-image: url('./assets/watercolor-paper-texture.jpg');
+  background-color: #cc6067;
   font-family: sans-serif;
 }
 </style>

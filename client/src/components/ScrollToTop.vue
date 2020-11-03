@@ -10,7 +10,8 @@ i.icon{
     position: fixed;
     right: 0;
     bottom: 0;
-    margin: 10px;
+    margin: 15px;
+    color: rgb(14, 14, 14);
 }
 </style>
 

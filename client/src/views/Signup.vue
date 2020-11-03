@@ -2,28 +2,32 @@
   <div class="signup">
     <div class="ui form">
       <div class="centerDisplay">
-        <img class="signupLogo" src="../assets/logo.png" width="200" height="200">
+        <h1>
+          <img class="signupLogo" src="../assets/logo.png" alt="Logo de la société Groupomania" width="200" height="200">
+        </h1>
       </div>
-      <div class="error"></div>
-      <div class="required field">
-        <label>Prénom</label>
-        <input type="text" placeholder="Prénom..." v-model="prenom">
-      </div>
-      <div class="required field">
-        <label>Nom</label>
-        <input type="text" placeholder="Nom..." v-model="nom">
-      </div>
-      <div class="required field">
-        <label>Email</label>
-        <input type="text" placeholder="Email..." v-model="email">
-      </div>
-      <div class="required field">
-        <label>Mot de passe</label>
-        <input type="text" placeholder="Mot de passe..." v-model="password">
-      </div>
-      <div class="centerDisplay btnSignup">
-        <button class="ui blue button" @click="signup">Je m'inscris</button>
-      </div>
+      <section>
+        <div class="error"></div>
+        <div class="required field">
+          <label for="prenom">Prénom</label>
+          <input type="text" placeholder="Prénom..." name="prenom" id="prenom" v-model="prenom">
+        </div>
+        <div class="required field">
+          <label for="nom">Nom</label>
+          <input type="text" placeholder="Nom..." name="nom" id="nom" v-model="nom">
+        </div>
+        <div class="required field">
+          <label for="email">Email</label>
+          <input type="text" placeholder="Email..." name="email" id="email" v-model="email">
+        </div>
+        <div class="required field">
+          <label for="password">Mot de passe</label>
+          <input type="password" placeholder="Mot de passe..." name="password" id="password" v-model="password">
+        </div>
+        <div class="centerDisplay btnSignup">
+          <button class="ui blue button" @click="signup">Je m'inscris</button>
+        </div>
+      </section>
     </div>
   </div>
 </template>
@@ -36,7 +40,6 @@
 
 .error{
   color: red;
-  margin: 10px 0px;
   font-size: 18px;
   font-weight: 400;
 }
@@ -47,8 +50,13 @@
   margin-top: 30px;
 }
 
-.ui.form input[type="text"] {
+.ui.form .field > label {
+  font-size: 15px;
+}
+
+.ui.form input[type="text"], .ui.form input[type="password"]  {
   border: solid black 1px;
+  border-radius: .28571429rem;
 }
 
 .centerDisplay{
@@ -56,7 +64,12 @@
   justify-content: center;
 }
 
+.ui.button{
+  color: black;
+}
+
 .ui.blue.button {
+  border: solid black 1px;
   margin: 50px;
   font-weight: bold;
   font-size: 18px;
@@ -111,6 +124,10 @@ export default {
               event.preventDefault()
             }) 
             let error = document.querySelector(".error")
+            error.style.backgroundColor = "#bfbfb8";
+            error.style.border = "solid 1px black";
+            error.style.margin = "10px 0px";
+            error.style.padding = "10px";
             error.innerHTML = "Erreur: Cette adresse email est déjà utilisé." 
           } else if (!res.body.error) {
             window.open("http://localhost:8080/", "_parent");
@@ -118,6 +135,10 @@ export default {
         });
       } else {
           let error = document.querySelector(".error")
+          error.style.backgroundColor = "#bfbfb8";
+          error.style.border = "solid 1px black";
+          error.style.margin = "10px 0px";
+          error.style.padding = "10px";
           error.innerHTML = "Erreur: Vous n'avez pas rempli tous les champs requis(*)."
       }
     },

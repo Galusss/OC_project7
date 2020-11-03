@@ -82,7 +82,7 @@ exports.create = function (req, res) {
 exports.update = function (req, res) {
     Article.findOne({
         where: {
-            userId: req.params.id
+            article_id: req.params.id
         }
     })
     .then(async article => {
@@ -92,7 +92,6 @@ exports.update = function (req, res) {
             })
             throw Error('Article not updated');
         }else {
-            article.url_article = req.body.url_article,
             article.source_article = req.body.source_article,
             article.articleName = req.body.articleName,
             article.article_description = req.body.article_description,

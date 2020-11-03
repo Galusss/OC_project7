@@ -2,24 +2,28 @@
   <div class="newArticle">
     <div class="ui form">
       <div class="centerDisplay">
-        <img class="newAccountLogo" src="../assets/logo.png" width="200" height="200">
+        <h1>
+          <img class="newAccountLogo" src="../assets/logo.png" alt="Logo de la société Groupomania" width="200" height="200">
+        </h1>
       </div>
-      <div class="error"></div>
-      <div class="required field">
-        <label>Nom</label>
-        <input type="text" placeholder="Nom de l'article..." v-model="articleName">
-      </div>
-      <div class="required field">
-        <label>Description</label>
-        <textarea type="text" placeholder="Description de l'article..." v-model="article_description"></textarea>
-      </div>
-      <div class="field">
-        <label>Source(s)</label>
-        <input type="text" placeholder="Sources utilisées sur l'article..." v-model="source_article">
-      </div>
-      <div class="centerDisplay btnNewArticle">
-        <button class="ui blue button" @click="create()">Créer l'article</button>
-      </div>
+      <section>
+        <div class="error"></div>
+          <div class="required field">
+            <label for="nom">Nom</label>
+            <input type="text" placeholder="Nom de l'article..." name="nom" id="nom" v-model="articleName">
+          </div>
+        <div class="required field">
+          <label for="description">Description</label>
+          <textarea type="text" placeholder="Description de l'article..." name="description" id="description" v-model="article_description"></textarea>
+        </div>
+        <div class="field">
+          <label for="source">Source(s)</label>
+          <input type="text" placeholder="Sources utilisées sur l'article..." name="source" id="source" v-model="source_article">
+        </div>
+        <div class="centerDisplay btnNewArticle">
+          <button class="ui blue button" @click="create()">Créer l'article</button>
+        </div>
+      </section>
     </div>
   </div>
 </template>
@@ -43,6 +47,10 @@
   margin-top: 30px;
 }
 
+.ui.form .field > label {
+  font-size: 15px;
+}
+
 .ui.form input[type="text"], .ui.form textarea:not([rows]) {
   border: solid black 1px;
 }
@@ -50,6 +58,11 @@
 .centerDisplay{
   display: flex;
   justify-content: center;
+}
+
+.ui.button{
+  border: solid black 1px;
+  color: black;
 }
 
 .ui.blue.button {
@@ -132,8 +145,12 @@ export default {
 
         });
       } else {
-        let error = document.querySelector(".error")
-        error.innerHTML = "Erreur: Vous n'avez pas rempli tous les champs requis(*)."
+          let error = document.querySelector(".error")
+          error.style.backgroundColor = "#bfbfb8";
+          error.style.border = "solid 1px black";
+          error.style.margin = "10px 0px";
+          error.style.padding = "10px";
+          error.innerHTML = "Erreur: Vous n'avez pas rempli tous les champs requis(*)."
       }
     }
   }

@@ -31,11 +31,15 @@ const routes = [
     component: () => import('../views/NewArticle.vue')
   },
   {
-  path: '/article/:id',
-  name: 'Article',
-  component: () => import('../views/OneArticle.vue')
+    path: '/article/:id',
+    name: 'Article',
+    component: () => import('../views/OneArticle.vue')
+  },
+  {
+    path: '/article/update/:id',
+    name: 'Article Update',
+    component: () => import('../views/UpdateArticle')
   }
-
 ]
 
 const router = new VueRouter({

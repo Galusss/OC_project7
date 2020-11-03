@@ -2,24 +2,29 @@
     <div class="account">
         <div class="ui form">
             <div class="centerDisplay">
-                <img class="accountLogo" src="../assets/logo.png" width="200" height="200">
-            </div>    
-            <div class="field">
-                <label>Email</label>
-                <input id="email" type="text" >
+                <h1>
+                    <img class="accountLogo" src="../assets/logo.png" alt="Logo de la société Groupomania" width="200" height="200">
+                </h1>
             </div>
-            <div class="field">
-                <label>Prenom</label>
-                <input id="prenom" type="text">
-            </div>
-            <div class="field">
-                <label>Nom</label>
-                <input id="nom" type="text">
-            </div>
-            <div class="centerDisplay btnAccount">
-                <button class="ui green button" @click="edit()">Modifier les informations</button>
-                <button class="ui red button" @click="destroy()">Supprimer le compte</button>
-            </div>
+            <section>
+                <div class="error"></div>
+                <div class="field">
+                    <label for="email">Email</label>
+                    <input name="email" id="email" type="text" >
+                </div>
+                <div class="field">
+                    <label for="prenom">Prenom</label>
+                    <input name="prenom" id="prenom" type="text">
+                </div>
+                <div class="field">
+                    <label for="nom">Nom</label>
+                    <input name="nom" id="nom" type="text">
+                </div>
+                <div class="centerDisplay btnAccount">
+                    <button class="ui blue button" @click="edit()">Modifier les informations</button>
+                    <button class="ui blue button" @click="destroy()">Supprimer le compte</button>
+                </div>
+            </section>
         </div>
     </div>
 </template>
@@ -30,10 +35,22 @@
     margin: 40px 0px;
 }
 
+.error{
+  color: red;
+  margin: 10px 0px;
+  font-size: 18px;
+  font-weight: 400;
+  text-align: center;
+}
+
 .ui.form{
     width: 50%;
     margin: auto;
     margin-top: 30px;
+}
+
+.ui.form .field > label {
+  font-size: 15px;
 }
 
 .ui.form input[type="text"] {
@@ -51,9 +68,11 @@
 
 .ui.button{
     margin: 30px;
+    border: solid black 1px;
+    color: black;
 }
 
-.ui.red.button, .ui.green.button{
+.ui.blue.button{
     font-weight: bold;
     font-size: 18px;
     font-family: Georgia, 'Times New Roman', Times, serif;
@@ -120,19 +139,29 @@ export default {
             let prenom = document.getElementById("prenom");
             let nom = document.getElementById("nom");
             const postData = { email: email.value, prenom: prenom.value, nom: nom.value };
-            this.$http.put("http://localhost:5000/users/account/" + id, postData, {
-                headers: {
-                    Authorization: 'bearer ' + token
-                }
-            })
-            .then(response => {
-                response.json().then((data) => {
-                    console.log('success', data)
-                    this.postData = data
-                }) 
-            }, (response) => {
-                console.log('erreur', response)
-            })
+            if (email.value.length != 0 && prenom.value.length  !=  0 && nom.value  !=  0) {
+                this.$http.put("http://localhost:5000/users/account/" + id, postData, {
+                    headers: {
+                        Authorization: 'bearer ' + token
+                    }
+                })
+                .then(response => {
+                    response.json().then((data) => {
+                        console.log('success', data)
+                        this.postData = data
+                        let error = document.querySelector(".error")
+                        if (error) {
+                            error.style.display = "none";
+                        }
+                    }) 
+                }, (response) => {
+                    console.log('erreur', response)
+                })
+            }else{
+                let error = document.querySelector(".error")
+                error.style.display = "initial";
+                error.innerHTML = "Erreur: Aucun champs ne doit être vide."
+            }
         },
         destroy: function () {
             this.$http.delete("http://localhost:5000/users/account/" + id, {
