@@ -6,26 +6,35 @@ const User = db.sequelize.define(
         id: {
             type: Sequelize.SMALLINT,
             primaryKey: true,
-            autoIncrement: true
+            autoIncrement: true,
+            unique: true,
+            allowNull : false
         },
         email: {
-            type: Sequelize.STRING
+            type: Sequelize.STRING,
+            unique: true,
+            allowNull : false
         },
         password: {
-            type: Sequelize.STRING
-            },
+            type: Sequelize.STRING,
+            allowNull : false
+        },
         nom: {
-            type: Sequelize.STRING
+            type: Sequelize.STRING,
+            allowNull : false
         },
         prenom: {
-            type: Sequelize.STRING
+            type: Sequelize.STRING,
+            allowNull : false
         },
         date_inscription: {
             type: Sequelize.DATE,
-            defaultValue: Sequelize.NOW
+            defaultValue: Sequelize.NOW,
+            allowNull : false
         },
         permission: {
-            type: Sequelize.SMALLINT
+            type: Sequelize.TINYINT,
+            allowNull : false
         }
     }, 
     {

@@ -90,7 +90,7 @@ div.ui.cards{
 
 .ui.card, .ui.cards > .card{
     border: solid grey 0.1em;
-    border-radius: 8px;
+    border-radius: 6px;
     -webkit-box-shadow: 8px 8px 5px 0px rgba(0,0,0,0.4);
     -moz-box-shadow: 8px 8px 5px 0px rgba(0,0,0,0.4);
     box-shadow: 8px 8px 5px 0px rgba(0,0,0,0.4);
@@ -182,7 +182,7 @@ export default {
                     title.innerHTML = "Aucun article n'est présent pour le moment"
                     card.style.display = "none";
                 } else{
-                    card.style.display = "initial";
+                    card.style.display = "flex";
                 }
             })
 
@@ -201,8 +201,11 @@ export default {
                 response.json().then((data) => {
                     this.article = data
                     console.log('success', data)
-                    let res = data.date_publication.split("T")
-                    sessionStorage.setItem('articleDate', res[0]);
+                    let res = data.date_publication.split("-")
+                    sessionStorage.setItem('articleDateAnnee', res[0]);
+                    sessionStorage.setItem('articleDateMois', res[1]);
+                    let dateJour = res[2].split("T")
+                    sessionStorage.setItem('articleDateJour', dateJour[0]);
                     sessionStorage.setItem('article', JSON.stringify(data));
                     window.open("http://localhost:8080/article/" + article.article_id, "_parent");
                 })       

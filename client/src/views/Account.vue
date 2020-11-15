@@ -10,7 +10,7 @@
                 <div class="error"></div>
                 <div class="field">
                     <label for="email">Email</label>
-                    <input name="email" id="email" type="text" >
+                    <input type="text" name="email" id="email" v-model="email" v-on:change="isEmailValid">
                 </div>
                 <div class="field">
                     <label for="prenom">Prenom</label>
@@ -138,29 +138,61 @@ export default {
             let email = document.getElementById("email");
             let prenom = document.getElementById("prenom");
             let nom = document.getElementById("nom");
+            let emailValid = sessionStorage.getItem("emailValid");
             const postData = { email: email.value, prenom: prenom.value, nom: nom.value };
             if (email.value.length != 0 && prenom.value.length  !=  0 && nom.value  !=  0) {
-                this.$http.put("http://localhost:5000/users/account/" + id, postData, {
-                    headers: {
-                        Authorization: 'bearer ' + token
-                    }
-                })
-                .then(response => {
-                    response.json().then((data) => {
-                        console.log('success', data)
-                        this.postData = data
-                        let error = document.querySelector(".error")
-                        if (error) {
-                            error.style.display = "none";
+                if (emailValid == "true") {
+                    this.$http.put("http://localhost:5000/users/account/" + id, postData, {
+                        headers: {
+                            Authorization: 'bearer ' + token
                         }
-                    }) 
-                }, (response) => {
-                    console.log('erreur', response)
-                })
-            }else{
+                    })
+                    .then(response => {
+                        response.json().then((data) => {
+                            if (data.error == "Email already exists") {
+                                let error = document.querySelector(".error")
+                                error.style.backgroundColor = "#bfbfb8";
+                                error.style.border = "solid 1px black";
+                                error.style.margin = "10px 0px";
+                                error.style.padding = "10px";
+                                error.innerHTML = "Erreur: Cette adresse est déjà utiliser."    
+                            } else {
+                                this.postData = data
+                                let error = document.querySelector(".error")
+                                if (error) {
+                                    error.style.display = "none";
+                                }
+                                window.location.reload()
+                                sessionStorage.setItem('userFirstname', prenom.value)
+                                sessionStorage.setItem('userLastname', nom.value)
+                            }
+                        }) 
+                    }, (response) => {
+                        console.log('erreur', response)
+                    })        
+                }else  {
+                    let error = document.querySelector(".error")
+                    error.style.backgroundColor = "#bfbfb8";
+                    error.style.border = "solid 1px black";
+                    error.style.margin = "10px 0px";
+                    error.style.padding = "10px";
+                    error.innerHTML = "Erreur: Vous devez utiliser une adresse email valide."
+                }
+            } else {
                 let error = document.querySelector(".error")
-                error.style.display = "initial";
-                error.innerHTML = "Erreur: Aucun champs ne doit être vide."
+                error.style.backgroundColor = "#bfbfb8";
+                error.style.border = "solid 1px black";
+                error.style.margin = "10px 0px";
+                error.style.padding = "10px";
+                error.innerHTML = "Erreur: Vous n'avez pas rempli tous les champs requis(*)."
+            }
+        },
+        isEmailValid() {
+            const emailRe = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            if (emailRe.test(this.email)) {
+                sessionStorage.setItem("emailValid", 'true');
+            } else {
+                sessionStorage.setItem("emailValid", 'false');
             }
         },
         destroy: function () {

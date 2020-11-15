@@ -1,12 +1,18 @@
-var http = require('http');
-var express = require("express")
-var cors = require("cors")
-var bodyParser = require("body-parser")
-var app = express()
+const http = require('http');
+const express = require("express")
+const app = express()
 
+const helmet = require("helmet");
+app.use(helmet());
+
+const bodyParser = require("body-parser")
 app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({
+    extended: false
+}))
+
+const cors = require("cors")
 app.use(cors())
-app.use(bodyParser.urlencoded({extended: false}))
 
 
 
@@ -21,6 +27,10 @@ app.use("/users", Users)
 var Articles = require("./routes/Articles")
 
 app.use("/articles", Articles)
+
+var Commentaires = require("./routes/Commentaires")
+
+app.use("/commentaires", Commentaires)
 
 
 
@@ -40,9 +50,8 @@ const normalizePort = val => {
     }
     return false;
 };
-const port = normalizePort(process.env.SERVER_PORT);
+const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
-
 
 // find errors and handle them appropriately
 const errorHandler = error => {
@@ -67,7 +76,6 @@ const errorHandler = error => {
 
 const server = http.createServer(app);
 server.on('error', errorHandler);
-
 
 // event listener
 server.on('listening', () => {

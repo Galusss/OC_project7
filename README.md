@@ -31,7 +31,12 @@
  11. Le ou la chargé-e de communication Groupomania doit pouvoir modérer les interactions entre les salariés.
  12. Le ou la chargé-e de communication Groupomania doit pouvoir afficher les dernières participations des salariés.
 
- #### __Installation :__ 
+ #### __Installation du projet :__ 
+##### __Base de données :__ 
+1. Créer une base de données en local et nommé la "groupomania_db_dev".
+2. Créer un nouvel utilisateur ayant les droit sur cette base de données.
+3. Remplacer les valeurs de "DB USER" & "DB PASS" dans le fichier .env fournis et remplacé ces valeurs par les informations de l'utilisateur ayant les droits sur la base de données créer précédemment.
+##### __Application :__ 
 1. Cloner le répository.
 2. Insérer le fichier ".env" qui contient les variables d'environnements dans le dossier racine de l'application.
 3. Faire un "npm install" directement depuis le dossier racine de l'application.

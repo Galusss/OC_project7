@@ -18,7 +18,7 @@
         </div>
         <div class="required field">
           <label for="email">Email</label>
-          <input type="text" placeholder="Email..." name="email" id="email" v-model="email">
+          <input type="text" placeholder="Email..." name="email" id="email" v-model="email" v-on:change="isEmailValid">
         </div>
         <div class="required field">
           <label for="password">Mot de passe</label>
@@ -114,34 +114,53 @@ export default {
   },
   methods: {
     signup() {
+      let emailValid = sessionStorage.getItem("emailValid");
       const postData = { prenom: this.prenom, nom: this.nom, email: this.email, password: this.password };
       if (this.prenom.length > 0 && this.nom.length > 0 && this.email.length > 0 && this.password.length > 0) {
-        this.$http
-        .post('http://localhost:5000/users/signup', postData)
-        .then(res => {
-          if (res.body.error) {
-            document.querySelector(".btnSignup").addEventListener("click", function(event) {
-              event.preventDefault()
-            }) 
+        if (emailValid == "true") {
+          this.$http
+          .post('http://localhost:5000/users/signup', postData)
+          .then(res => {
+            if (res.body.error) {
+              document.querySelector(".btnSignup").addEventListener("click", function(event) {
+                event.preventDefault()
+              }) 
+              let error = document.querySelector(".error")
+              error.style.backgroundColor = "#bfbfb8";
+              error.style.border = "solid 1px black";
+              error.style.margin = "10px 0px";
+              error.style.padding = "10px";
+              error.innerHTML = "Erreur: Cette adresse email est déjà utilisé." 
+            } else if (!res.body.error) {
+              sessionStorage.clear("emailValid");
+              window.open("http://localhost:8080/", "_parent");
+            } 
+          });
+        } else {
             let error = document.querySelector(".error")
             error.style.backgroundColor = "#bfbfb8";
             error.style.border = "solid 1px black";
             error.style.margin = "10px 0px";
             error.style.padding = "10px";
-            error.innerHTML = "Erreur: Cette adresse email est déjà utilisé." 
-          } else if (!res.body.error) {
-            window.open("http://localhost:8080/", "_parent");
-          } 
-        });
+            error.innerHTML = "Erreur: Vous devez utiliser une adresse email valide."
+        }
       } else {
-          let error = document.querySelector(".error")
-          error.style.backgroundColor = "#bfbfb8";
-          error.style.border = "solid 1px black";
-          error.style.margin = "10px 0px";
-          error.style.padding = "10px";
-          error.innerHTML = "Erreur: Vous n'avez pas rempli tous les champs requis(*)."
+            let error = document.querySelector(".error")
+            error.style.backgroundColor = "#bfbfb8";
+            error.style.border = "solid 1px black";
+            error.style.margin = "10px 0px";
+            error.style.padding = "10px";
+            error.innerHTML = "Erreur: Vous n'avez pas rempli tous les champs requis(*)."
       }
     },
+    isEmailValid() {
+      const emailRe = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      if (emailRe.test(this.email)) {
+        sessionStorage.setItem("emailValid", 'true');
+      } else {
+        sessionStorage.setItem("emailValid", 'false');
+      }
+    }
   }
 }
 </script>

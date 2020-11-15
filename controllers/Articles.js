@@ -1,10 +1,14 @@
 const Article = require('../models/Article')
 const User = require('../models/User')
+User.hasOne(Article, {
+    onDelete: 'CASCADE',
+});
+Article.belongsTo(User)
 
 
 // get all article
 exports.getAllArticle = function (req, res) {
-    Article.findAll()
+    Article.findAll({order: [["date_publication", 'DESC']]})
     .then(article => {
         if(article.length === 0) {
             res.json({
@@ -53,7 +57,7 @@ exports.create = function (req, res) {
     Article.findOne({
         where: {
             articleName: req.body.articleName
-        }
+        },
     })
     .then(article => {
         if (!article) {
@@ -82,23 +86,37 @@ exports.create = function (req, res) {
 exports.update = function (req, res) {
     Article.findOne({
         where: {
-            article_id: req.params.id
-        }
+            articleName: req.body.articleName
+        }       
     })
-    .then(async article => {
+    .then(article => {
         if (!article) {
-            res.json({
-                status: 'Article not updated'
+            Article.findOne({
+                where: {
+                    article_id: req.params.id
+                }
             })
-            throw Error('Article not updated');
+            .then(async article => {
+                if (!article) {
+                    res.json({
+                        status: 'Article not updated'
+                    })
+                    throw Error('Article not updated');
+                }else {
+                    article.source_article = req.body.source_article,
+                    article.articleName = req.body.articleName,
+                    article.article_description = req.body.article_description,
+                    await article.save();
+                    res.json(article)
+                }
+            })
         }else {
-            article.source_article = req.body.source_article,
-            article.articleName = req.body.articleName,
-            article.article_description = req.body.article_description,
-            await article.save();
-            res.json(article)
+            res.json({
+                error: 'Article name already exists'
+            })            
         }
     })
+
 };
 
 

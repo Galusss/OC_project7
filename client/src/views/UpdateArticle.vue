@@ -21,7 +21,7 @@
           <input type="text" placeholder="Sources utilisées sur l'article..." name="source" id="source">
         </div>
         <div class="centerDisplay btnNewArticle">
-          <button class="ui blue button" @click="edit()">Modifier l'article</button>
+          <button class="ui blue button" id="test" @click="edit()">Modifier l'article</button>
         </div>
       </section>
     </div>
@@ -120,30 +120,44 @@ export default {
             let nom = document.getElementById("nom");
             let description = document.getElementById("description");
             let source = document.getElementById("source");
+            if (source.value.length == 0) {
+                source.value = "Pas de source renseignée"
+            }
             const postData = { articleName: nom.value, article_description: description.value, source_article: source.value };
-            if (nom.value.length != 0 && description.value.length  !=  0 && source.value  !=  0) {
+            if (nom.value.length != 0 && description.value.length  !=  0) {
                 this.$http.put("http://localhost:5000/articles/" + data.article_id, postData, {
                     headers: {
                         Authorization: 'bearer ' + token
                     }
                 })
                 .then(response => {
-                    response.json().then((data) => {
-                        console.log('success', data)
-                        this.postData = data
-                        let error = document.querySelector(".error")
-                        if (error) {
-                            error.style.display = "none";
-                        }
-                        window.open("http://localhost:8080/articles", "_parent");
-                    }) 
+                  response.json().then((data) => {
+                    if (data.error == "Article name already exists") {  
+                      let error = document.querySelector(".error")
+                      error.style.backgroundColor = "#bfbfb8";
+                      error.style.border = "solid 1px black";
+                      error.style.margin = "10px 0px";
+                      error.style.padding = "10px";
+                      error.innerHTML = "Erreur: Ce nom d'article est déjà utiliser."           
+                    }else {
+                      this.postData = data
+                      let error = document.querySelector(".error")
+                      if (error) {
+                        error.style.display = "none";
+                      }
+                      window.open("http://localhost:8080/articles", "_parent"); 
+                    }
+                  }) 
                 }, (response) => {
-                    console.log('erreur', response)
+                  console.log('erreur', response)
                 })
-            }else{
-                let error = document.querySelector(".error")
-                error.style.display = "initial";
-                error.innerHTML = "Erreur: Aucun champs ne doit être vide."
+            }else {
+              let error = document.querySelector(".error")
+              error.style.backgroundColor = "#bfbfb8";
+              error.style.border = "solid 1px black";
+              error.style.margin = "10px 0px";
+              error.style.padding = "10px";
+              error.innerHTML = "Erreur: Vous n'avez pas rempli tous les champs requis(*)."
             }
         }
     }

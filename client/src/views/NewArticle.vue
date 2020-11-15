@@ -141,15 +141,12 @@ export default {
           } else if (!res.body.error) {
             window.open('http://localhost:8080/articles', "_parent")
           }
-          
-
         });
       } else {
           let error = document.querySelector(".error")
           error.style.backgroundColor = "#bfbfb8";
           error.style.border = "solid 1px black";
           error.style.margin = "10px 0px";
-          error.style.padding = "10px";
           error.innerHTML = "Erreur: Vous n'avez pas rempli tous les champs requis(*)."
       }
     }

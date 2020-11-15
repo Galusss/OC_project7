@@ -109,25 +109,39 @@ exports.getOneUser = function (req, res) {
 exports.update = function (req, res) {
     User.findOne({
         where: {
-            id: req.params.id
+            email: req.body.email
         }
     })
-    .then(async user => {
-        if (!user) {
-            res.json({
-                status: 'User not updated'
+    .then(article => {
+        if (!article) {
+            User.findOne({
+                where: {
+                    id: req.params.id
+                }
             })
-            throw Error('User not updated');
+            .then(async user => {
+                if (!user) {
+                    res.json({
+                        status: 'User not updated'
+                    })
+                    throw Error('User not updated');
+                }else {
+                    user.email = req.body.email;
+                    user.nom = req.body.nom;
+                    user.prenom = req.body.prenom;
+                    await user.save();
+                    res.json({
+                        status: 'User successfully updated'
+                    })
+                }
+            })
         }else {
-            user.email = req.body.email;
-            user.nom = req.body.nom;
-            user.prenom = req.body.prenom;
-            await user.save();
             res.json({
-                status: 'User successfully updated'
-            })
+                error: 'Email already exists'
+            })            
         }
     })
+
 };
 
 
