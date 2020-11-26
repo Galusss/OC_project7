@@ -98,17 +98,18 @@
     .ui.red.button, .ui.green.button{
         min-width: 210px;
     }
+
+    .btnAccount{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 }
 
 @media screen and (max-width: 550px) {
     img{
         width: 80px;
         height: 80px;
-    }
-
-    .ui.red.button, .ui.green.button{
-        font-size: 8px;
-        min-width: 130px;
     }
 }
 </style>

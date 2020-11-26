@@ -23,7 +23,7 @@
                         <span>Date de publication :</span> {{  dateJour + "/" + dateMois + "/" + dateAnnee }}
                     </div>
                 </div>
-                <div>
+                <div class="btnManageArticle">
                     <button class="ui blue button editBtn" @click="goToUpdateArticle()">Modifier l'article</button>
                     <button class="ui blue button deleteBtn" @click="destroy()">Supprimer l'article</button>
                 </div>
@@ -171,6 +171,12 @@ border-top-right-radius: 0.285714rem;
 
     .ui.card{
         width: 500px;
+    }
+
+    .btnManageArticle{
+        display: flex;
+        flex-direction: column;
+        align-items: center;    
     }
 }
 
