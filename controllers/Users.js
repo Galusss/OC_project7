@@ -59,7 +59,7 @@ exports.login = function (req, res) {
     .then(user => {
         if (user) {
             if (bcrypt.compareSync(req.body.password, user.password)) {
-                let token = jwt.sign(user.dataValues, process.env.TOKEN_KEY, {
+                let token = jwt.sign(user.dataValues, 'SecretToken', {
                     expiresIn: '24h'
                 })
                 res.send({

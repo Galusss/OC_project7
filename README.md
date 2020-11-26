@@ -32,14 +32,17 @@
  12. Le ou la chargé-e de communication Groupomania doit pouvoir afficher les dernières participations des salariés.
 
  #### __Installation du projet :__ 
+ Required: 
+ - MySQL
+ - Node.js & npm
 ##### __Base de données :__ 
 1. Créer une base de données en local et nommé la "groupomania_db_dev".
 2. Créer un nouvel utilisateur ayant les droit sur cette base de données.
-3. Remplacer les valeurs de "DB USER" & "DB PASS" dans le fichier .env fournis et remplacé ces valeurs par les informations de l'utilisateur ayant les droits sur la base de données créer précédemment.
+
 ##### __Application :__ 
 1. Cloner le répository.
-2. Insérer le fichier ".env" qui contient les variables d'environnements dans le dossier racine de l'application.
+2. Remplacer les informations de connexion vers la base de données dans "config/db.js"
 3. Faire un "npm install" directement depuis le dossier racine de l'application.
 4. Faire un nouveau "npm install" cette fois ci depuis le dossier "client" de l'application.
-5. Lancer le serveur de développement Vue.JS avec la commande "serve" depuis votre IDE ou "vue-cli-service serve" depuis un terminal de commande.
-6. Lancer le serveur backend avec la commande "dev" depuis votre IDE ou "nodemon server.js" depuis un terminal de commande.
+5. Lancer le serveur de développement Vue.JS avec le script npm "serve" depuis votre IDE ou "vue-cli-service serve" depuis un terminal de commande.
+6. Lancer le serveur backend avec le script npm "dev" depuis votre IDE ou avec la commande "nodemon server.js" depuis un terminal de commande.
