@@ -31,15 +31,19 @@
  11. Le ou la chargé-e de communication Groupomania doit pouvoir modérer les interactions entre les salariés.
  12. Le ou la chargé-e de communication Groupomania doit pouvoir afficher les dernières participations des salariés.
 
- #### __Installation du projet :__ 
+ #### __Installation du projet :__
+  Required: 
+ - MySQL
+ - Node.js & npm
 ##### __Base de données :__ 
 1. Créer une base de données en local et nommé la "groupomania_db_dev".
 2. Créer un nouvel utilisateur ayant les droit sur cette base de données.
-3. Remplacer les valeurs de "DB USER" & "DB PASS" dans le fichier .env fournis et remplacé ces valeurs par les informations de l'utilisateur ayant les droits sur la base de données créer précédemment.
+3. Remplacer les valeurs de "DB USER" & "DB PASS" dans le fichier .env fournis et remplacé ces valeurs par les informations de l'utilisateur ayant les droits sur la base de données créer précédemment. 
+Si vous ne voulez pas utiliser le fichier .env fournis vous pouvez utiliser la branch GitHub "master-no-env", vous devrez ensuite suivre la procédure d'installation sur le README de cette branche. Sinon vous pouvez continuer.
 ##### __Application :__ 
 1. Cloner le répository.
 2. Insérer le fichier ".env" qui contient les variables d'environnements dans le dossier racine de l'application.
 3. Faire un "npm install" directement depuis le dossier racine de l'application.
 4. Faire un nouveau "npm install" cette fois ci depuis le dossier "client" de l'application.
-5. Lancer le serveur de développement Vue.JS avec la commande "serve" depuis votre IDE ou "vue-cli-service serve" depuis un terminal de commande.
-6. Lancer le serveur backend avec la commande "dev" depuis votre IDE ou "nodemon server.js" depuis un terminal de commande.
+5. Lancer le serveur de développement Vue.JS avec le script npm "serve" depuis votre IDE ou utiliser la commande "vue-cli-service serve" depuis un terminal.
+6. Lancer le serveur backend avec le script npm "dev" depuis votre IDE ou la commande "nodemon server.js" depuis un terminal.
