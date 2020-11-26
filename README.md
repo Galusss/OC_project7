@@ -39,7 +39,7 @@
 1. Créer une base de données en local et nommé la "groupomania_db_dev".
 2. Créer un nouvel utilisateur ayant les droit sur cette base de données.
 3. Remplacer les valeurs de "DB USER" & "DB PASS" dans le fichier .env fournis et remplacé ces valeurs par les informations de l'utilisateur ayant les droits sur la base de données créer précédemment. 
-Si vous ne voulez pas utiliser le fichier .env fournis vous pouvez utiliser la branch GitHub "master-no-env", vous devrez ensuite suivre la procédure d'installation sur le README de cette branche. Sinon vous pouvez continuer.
+Si vous ne voulez pas utiliser le fichier .env fournis vous pouvez utiliser la branche GitHub "master-no-env", vous devrez ensuite suivre la procédure d'installation sur le README de cette branche. Sinon vous pouvez continuer.
 ##### __Application :__ 
 1. Cloner le répository.
 2. Insérer le fichier ".env" qui contient les variables d'environnements dans le dossier racine de l'application.
