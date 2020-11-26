@@ -110,6 +110,9 @@ div.ui.cards{
 
 .btnArticle{
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
 }
 
 .ui.button{
@@ -153,6 +156,10 @@ div.ui.cards{
   img{
     width: 80px;
     height: 80px;
+  }
+
+  .card{
+    max-width: 50px;
   }
 }
 </style>
